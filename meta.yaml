@@ -2,31 +2,27 @@ about:
   home: https://www.openmicroscopy.org/
   license: GNU General Public v2 or later (GPLv2+)
   license_family: GPL2
-  summary: Bio-Formats command line tools
-  doc_url: https://docs.openmicroscopy.org/bio-formats/latest/users/comlinetools/index.html
-  dev_url: https://github.com/ome/bioformats
+  summary: Raw format to OME-TIFF converter
+  dev_url: https://github.com/glencoesoftware/raw2ometiff/
+
 
 package:
-  name: "bftools"
-  version: "6.3.1"
+  name: "raw2ometiff"
+  version: "0.2.3"
 
 build:
   noarch: generic
   number: 1
 
 source:
-  url: https://downloads.openmicroscopy.org/bio-formats/6.3.1/artifacts/bftools.zip
-  sha256: 1bced614e9e46ac3420e2ebd89e0b0a62de43fc60d29a91185e3738b47c8c649
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.2.3/raw2ometiff-0.2.3.zip
+  sha256: 017b151556649943ea870b8bec60fcb86588e9584972323a6c54097398209387
 
 requirements:
   host:
   run:
-    - openjdk
+    - openjdk =11
 
-test:
-  commands:
-    - showinf -nopix a.fake
-
-extra:
+testextra:
   recipe-maintainers:
     - ome
