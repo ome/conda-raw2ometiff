@@ -3,8 +3,7 @@ package:
   version: "0.2.4"
 
 build:
-  noarch: generic
-  number: 1
+  number: 2
 
 source:
   url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.2.4/raw2ometiff-0.2.4.zip
