@@ -1,13 +1,13 @@
 package:
   name: "raw2ometiff"
-  version: "0.2.7"
+  version: "0.2.8"
 
 build:
   number: 0
 
 source:
-  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.2.7/raw2ometiff-0.2.7.zip
-  sha256: 9c9f7ba990e71d4556cd14921b263a3456aa461f89933a47b039514bbf945da4
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.2.8/raw2ometiff-0.2.8.zip
+  sha256: b8d3a4db0abedbfdf55216757e1699c72d6ff8e141303c3182a92b09bf360792
 
 requirements:
   host:
