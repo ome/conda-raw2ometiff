@@ -1,0 +1,31 @@
+{% set version = "0.2.8" %}
+package:
+  name: "raw2ometiff"
+  version: "{{ version }}"
+
+build:
+  number: 0
+
+source:
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ version }}.zip
+  sha256: b8d3a4db0abedbfdf55216757e1699c72d6ff8e141303c3182a92b09bf360792
+
+requirements:
+  run:
+    - raw2ometiff-libs={{ PKG_VERSION }}-{{ PKG_BUILDNUM }}
+    - openjdk
+
+test:
+  commands:
+    - raw2ometiff --help
+
+extra:
+  recipe-maintainers:
+    - ome
+
+about:
+  home: https://www.openmicroscopy.org/
+  license: GNU General Public v2 or later (GPLv2+)
+  license_family: GPL2
+  summary: Raw format to OME-TIFF converter
+  dev_url: https://github.com/glencoesoftware/raw2ometiff/

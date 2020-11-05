@@ -1,24 +1,20 @@
+{% set version = "0.2.8" %}
 package:
-  name: "raw2ometiff"
-  version: "0.2.8"
+  name: "raw2ometiff-libs"
+  version: "{{ version }}"
 
 build:
   number: 0
+  noarch: generic
 
 source:
-  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v0.2.8/raw2ometiff-0.2.8.zip
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ version }}.zip
   sha256: b8d3a4db0abedbfdf55216757e1699c72d6ff8e141303c3182a92b09bf360792
 
+# Leave the general dependencies to the wrapper
 requirements:
-  host:
-  run:
-    - openjdk
 
-test:
-  commands:
-    - raw2ometiff --help
-
-testextra:
+extra:
   recipe-maintainers:
     - ome
 
