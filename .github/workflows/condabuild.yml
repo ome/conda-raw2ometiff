@@ -1,0 +1,79 @@
+---
+name: Conda
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        python: [3.6, 3.7, 3.8, 3.9]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: setup-conda
+        uses: s-weigand/setup-conda@v1.0.5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Set conda-bld output folder to make it easier to find artifacts
+        id: condablddir
+        # On Windows /conda-bld and \\conda-bld work here but fail later
+        # c:\\conda-bld seems to work.... for now
+        run: |
+          if [ ${{ matrix.os }} = windows-latest ]; then
+            echo "::set-output name=condabld::c:\\conda-bld"
+          else
+            echo "::set-output name=condabld::$HOME/conda-bld"
+          fi
+        shell: bash
+      - run: |
+          echo "${{ steps.condablddir.outputs.condabld }}"
+          mkdir ${{ steps.condablddir.outputs.condabld }}
+          conda config --set conda_build.output_folder ${{ steps.condablddir.outputs.condabld }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install conda build
+        run: conda install -y -q conda-build conda-verify
+      - name: Build
+        shell: bash
+        run: |
+          if [[ ${{ github.ref }} =~ 'refs/heads/' ]]; then
+            export VERSION_SUFFIX=".${GITHUB_REF#refs/heads/}"
+          else
+            export VERSION_SUFFIX=""
+          fi
+          conda build --python ${{ matrix.python }} .
+      - name: List outputs
+        run: |
+          ls -R "${{ steps.condablddir.outputs.condabld }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: "${{ steps.condablddir.outputs.condabld }}/*-64/raw2ometiff*"
+          if-no-files-found: error
+  upload:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags')
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: setup-conda
+        uses: s-weigand/setup-conda@v1.0.5
+      - run: conda install -y -q anaconda-client
+
+      - name: Download artifacts from build
+        uses: actions/download-artifact@v2
+      - name: List artifacts
+        run: ls -R
+
+      - name: Upload to Anaconda Cloud
+        run: |
+          anaconda whoami
+          for f in artifact/raw2ometiff* artifact/*/raw2ometiff*; do
+            anaconda upload --user ${ANACONDA_USER} $f
+          done
+        env:
+          ANACONDA_USER: ${{ secrets.ANACONDA_USER }}
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
