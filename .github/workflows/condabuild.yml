@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        python: [3.6]
+        python: [3.6, 3.7, 3.8, 3.9]
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -49,6 +49,7 @@ jobs:
         run: |
           ls -R "${{ steps.condablddir.outputs.condabld }}"
       - name: Upload artifacts
+        if: matrix.python == '3.7'
         uses: actions/upload-artifact@v2
         with:
           path: "${{ steps.condablddir.outputs.condabld }}/*-64/raw2ometiff*"
