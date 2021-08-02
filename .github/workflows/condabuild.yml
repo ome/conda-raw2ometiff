@@ -80,7 +80,7 @@ jobs:
         run: |
           anaconda whoami
           for f in artifact/raw2ometiff* artifact/*/raw2ometiff*; do
-            anaconda upload --user ${ANACONDA_USER} --label pre $f
+            anaconda upload --user ${ANACONDA_USER} $f
           done
         env:
           ANACONDA_USER: ${{ secrets.ANACONDA_USER }}
