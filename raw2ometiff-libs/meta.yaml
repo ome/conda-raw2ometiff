@@ -1,5 +1,4 @@
-{% set version = "0.3.0rc3" %}
-{% set github_version = "0.3.0-rc3" %}
+{% set version = "0.3.0" %}
 package:
   name: "raw2ometiff-libs"
   version: "{{ version }}"
@@ -9,8 +8,8 @@ build:
   noarch: generic
 
 source:
-  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ github_version }}.zip
-  sha256: 7e58e616d39b8af5cfb9081747436c3f3dfbe20cd377c54b15687cbeb1bec0e6
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ version }}.zip
+  sha256: 0731dc3e03b23ac90d38eab45dc57e71db7db1219a189aac0be97f1116fc2fa1
 
 # Leave the general dependencies to the wrapper
 requirements:
