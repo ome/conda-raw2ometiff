@@ -1,4 +1,4 @@
-{% set version = "0.3.0" %}
+{% set version = "0.4.1" %}
 package:
   name: "raw2ometiff-libs"
   version: "{{ version }}"
@@ -8,15 +8,16 @@ build:
   noarch: generic
 
 source:
-  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ version }}.zip
-  sha256: 0731dc3e03b23ac90d38eab45dc57e71db7db1219a189aac0be97f1116fc2fa1
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version
+    }}/raw2ometiff-{{ version }}.zip
+  sha256: 1c7f76eeae3de758ee5f844d9e1455aa34b4d4d65fcd6e2a07b710ce7f2aff30
 
 # Leave the general dependencies to the wrapper
 requirements:
 
 extra:
   recipe-maintainers:
-    - ome
+  - ome
 
 about:
   home: https://www.openmicroscopy.org/

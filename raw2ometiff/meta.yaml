@@ -1,4 +1,4 @@
-{% set version = "0.3.0" %}
+{% set version = "0.4.1" %}
 package:
   name: "raw2ometiff"
   version: "{{ version }}"
@@ -7,21 +7,22 @@ build:
   number: 0
 
 source:
-  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version }}/raw2ometiff-{{ version }}.zip
-  sha256: 0731dc3e03b23ac90d38eab45dc57e71db7db1219a189aac0be97f1116fc2fa1
+  url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version
+    }}/raw2ometiff-{{ version }}.zip
+  sha256: 1c7f76eeae3de758ee5f844d9e1455aa34b4d4d65fcd6e2a07b710ce7f2aff30
 
 requirements:
   run:
-    - raw2ometiff-libs={{ PKG_VERSION }}-{{ PKG_BUILDNUM }}
-    - openjdk
+  - raw2ometiff-libs={{ PKG_VERSION }}-{{ PKG_BUILDNUM }}
+  - openjdk
 
 test:
   commands:
-    - raw2ometiff --help
+  - raw2ometiff --help
 
 extra:
   recipe-maintainers:
-    - ome
+  - ome
 
 about:
   home: https://www.openmicroscopy.org/
