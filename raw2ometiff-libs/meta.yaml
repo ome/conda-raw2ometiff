@@ -20,7 +20,7 @@ extra:
   - ome
 
 about:
-  home: https://www.openmicroscopy.org/
+  home: https://www.glencoesoftware.com/
   license: GNU General Public v2 or later (GPLv2+)
   license_family: GPL2
   summary: Raw format to OME-TIFF converter
