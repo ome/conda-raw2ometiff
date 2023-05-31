@@ -10,8 +10,6 @@ source:
   url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version
     }}/raw2ometiff-{{ version }}.zip
   sha256: 2e31d38ff069ffd85207723cc3bbce8090fe5717d0e22b311ccbc9dba02a7727
-  patches:
-  - windows-bat-classpath-wildcard.patch    # [win]
 
 requirements:
   run:
