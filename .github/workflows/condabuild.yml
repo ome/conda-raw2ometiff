@@ -25,7 +25,6 @@ jobs:
           use-only-tar-bz2: true
           activate-environment: true
           auto-update-conda: true
-          auto-activate-base: true
 
       - name: Set conda-bld output folder to make it easier to find artifacts
         id: condablddir
