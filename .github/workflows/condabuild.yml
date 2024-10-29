@@ -10,13 +10,21 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-latest
+          - macos-12
+          - macos-14
           - ubuntu-latest
           - windows-latest
       fail-fast: false
     steps:
       - name: setup-conda
-        uses: s-weigand/setup-conda@v1.0.7
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniconda-version: "latest"
+          channels: conda-forge, defaults
+          use-only-tar-bz2: true
+          activate-environment: ""
+          auto-update-conda: true
+          auto-activate-base: true
 
       - name: Set conda-bld output folder to make it easier to find artifacts
         id: condablddir
@@ -27,6 +35,10 @@ jobs:
             echo "condabld=c:\\conda-bld" >> $GITHUB_OUTPUT
           else
             echo "condabld=$HOME/conda-bld" >> $GITHUB_OUTPUT
+            if [ ${{ matrix.os }} = macos-14 ]; then
+              # Surprising that this is required. Locally, the directory includes "arm" automatically
+              conda config --env --set subdir "osx-arm64"
+            fi
           fi
         shell: bash
 
@@ -42,8 +54,11 @@ jobs:
 
       - name: Build raw2ometiff-libs
         run: conda build raw2ometiff-libs
+        shell: bash -el {0}
       - name: Build raw2ometiff
         run: conda build raw2ometiff
+        shell: bash -el {0}
+
       - run: ls -R "${{ steps.condablddir.outputs.condabld }}"
 
       # We want
@@ -57,8 +72,9 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
       - uses: actions/upload-artifact@v2
         with:
-          # {linux,osx,win}-64
-          path: "${{ steps.condablddir.outputs.condabld }}/*-64/raw2ometiff-*"
+          # {linux,osx,win}-64 and arm64
+          name: artifact-${{ matrix.os }}-64
+          path: "${{ steps.condablddir.outputs.condabld }}/*64/raw2ometiff-*"
           if-no-files-found: error
 
   upload:
@@ -68,7 +84,13 @@ jobs:
     steps:
 
       - name: setup-conda
-        uses: s-weigand/setup-conda@v1.0.7
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniconda-version: "latest"
+          channels: defaults
+          activate-environment: ""
+          auto-update-conda: true
+          auto-activate-base: true
       - run: conda install -y -q anaconda-client
 
       - name: Download artifacts from build
@@ -77,9 +99,10 @@ jobs:
         run: ls -R
 
       - name: Upload to Anaconda Cloud
+        shell: bash -el {0}
         run: |
           anaconda whoami
-          for f in artifact/raw2ometiff* artifact/*/raw2ometiff*; do
+          for f in artifact*/raw2ometiff* artifact*/*/raw2ometiff*; do
             anaconda upload --user ${ANACONDA_USER} $f
           done
         env:
