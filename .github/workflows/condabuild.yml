@@ -65,12 +65,12 @@ jobs:
       # - raw2ometiff-libs noarch from one job
       # - raw2ometiff *-64 from all jobs
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           path: "${{ steps.condablddir.outputs.condabld }}/noarch/raw2ometiff-libs-*"
           if-no-files-found: error
         if: matrix.os == 'ubuntu-latest'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           # {linux,osx,win}-64 and arm64
           name: artifact-${{ matrix.os }}-64
@@ -94,7 +94,7 @@ jobs:
       - run: conda install -y -q anaconda-client
 
       - name: Download artifacts from build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
       - name: List artifacts
         run: ls -R
 
