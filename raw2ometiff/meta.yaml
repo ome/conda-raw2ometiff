@@ -1,4 +1,4 @@
-{% set version = "0.5.0" %}
+{% set version = "0.7.1" %}
 package:
   name: "raw2ometiff"
   version: "{{ version }}"
@@ -9,7 +9,7 @@ build:
 source:
   url: https://github.com/glencoesoftware/raw2ometiff/releases/download/v{{ version
     }}/raw2ometiff-{{ version }}.zip
-  sha256: 2e31d38ff069ffd85207723cc3bbce8090fe5717d0e22b311ccbc9dba02a7727
+  sha256: decbaae82b2b5d2a7672fbe34a808b32395f9e4f5fde9dbe6693cc960ad8caad
 
 requirements:
   run:
