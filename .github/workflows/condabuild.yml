@@ -87,7 +87,7 @@ jobs:
         with:
           miniconda-version: "latest"
           channels: defaults
-          activate-environment: true
+          activate-environment: ""
           auto-update-conda: true
           auto-activate-base: true
       - run: conda install -y -q anaconda-client
